@@ -9,3 +9,4 @@
   cd cars-ontology-app
   docker-compose up
 ```
+<p>Aplikacja jest dostępna na porcie 8000 a UI Fuseki Servera na porcie 3030</p>
