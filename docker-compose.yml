@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   django:
+    image: janbielski48/cars-ontology-app:django-latest
     build:
       context: ./cars_ontology_app
     ports:
@@ -14,6 +15,7 @@ services:
       - FUSEKI_SPARQL_ENDPOINT=http://fuseki:3030/cars-ontology/sparql
 
   fuseki:
+    image: janbielski48/cars-ontology-app:fuseki-latest
     build:
       context: ./fuseki_server
     ports:
