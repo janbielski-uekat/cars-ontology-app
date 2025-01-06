@@ -1,0 +1,596 @@
+@prefix : <http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/> .
+
+<http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasEngine
+:hasEngine rdf:type owl:ObjectProperty ,
+                    owl:FunctionalProperty ;
+           rdfs:domain :Car ;
+           rdfs:range :Engine .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasModelVersion
+:hasModelVersion rdf:type owl:ObjectProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain :Car ;
+                 rdfs:range :ModelVersion .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasTransmission
+:hasTransmission rdf:type owl:ObjectProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain :Car ;
+                 rdfs:range :Transmission .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasVersion
+:hasVersion rdf:type owl:ObjectProperty ;
+            owl:inverseOf :isVersionOfModel ;
+            rdf:type owl:InverseFunctionalProperty ;
+            rdfs:domain :Model ;
+            rdfs:range :ModelVersion .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/isListedIn
+:isListedIn rdf:type owl:ObjectProperty ;
+            owl:inverseOf :isListingOf ;
+            rdf:type owl:InverseFunctionalProperty ;
+            rdfs:domain :Car ;
+            rdfs:range :Listing .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/isListingOf
+:isListingOf rdf:type owl:ObjectProperty ,
+                      owl:InverseFunctionalProperty ;
+             rdfs:domain :Listing ;
+             rdfs:range :Car .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/isManufacturedBy
+:isManufacturedBy rdf:type owl:ObjectProperty ;
+                  owl:inverseOf :manufactures ;
+                  rdf:type owl:FunctionalProperty ;
+                  rdfs:domain :Model ;
+                  rdfs:range :Manufacturer .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/isVersionOfModel
+:isVersionOfModel rdf:type owl:ObjectProperty ,
+                           owl:FunctionalProperty ;
+                  rdfs:domain :ModelVersion ;
+                  rdfs:range :Model .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/listedBy
+:listedBy rdf:type owl:ObjectProperty ;
+          owl:inverseOf :lists ;
+          rdf:type owl:FunctionalProperty ;
+          rdfs:domain :Listing ;
+          rdfs:range :Seller .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/lists
+:lists rdf:type owl:ObjectProperty ,
+                owl:InverseFunctionalProperty ;
+       rdfs:domain :Seller ;
+       rdfs:range :Listing .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/locatedAt
+:locatedAt rdf:type owl:ObjectProperty ,
+                    owl:FunctionalProperty ;
+           rdfs:domain :Listing ;
+           rdfs:range :Location .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/manufactures
+:manufactures rdf:type owl:ObjectProperty ,
+                       owl:InverseFunctionalProperty ;
+              rdfs:domain :Manufacturer ;
+              rdfs:range :Model .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasAddress
+:hasAddress rdf:type owl:DatatypeProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :Location ;
+            rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasCarOriginCountry
+:hasCarOriginCountry rdf:type owl:DatatypeProperty ,
+                              owl:FunctionalProperty ;
+                     rdfs:domain :Car ;
+                     rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasCity
+:hasCity rdf:type owl:DatatypeProperty ,
+                  owl:FunctionalProperty ;
+         rdfs:domain :Location ;
+         rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasCountry
+:hasCountry rdf:type owl:DatatypeProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :Location ;
+            rdfs:range [ rdf:type rdfs:Datatype ;
+                         owl:oneOf [ rdf:type rdf:List ;
+                                     rdf:first "Niemcy" ;
+                                     rdf:rest [ rdf:type rdf:List ;
+                                                rdf:first "Polska" ;
+                                                rdf:rest rdf:nil
+                                              ]
+                                   ]
+                       ] .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasDescription
+:hasDescription rdf:type owl:DatatypeProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain :Listing ;
+                rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasEmailAddress
+:hasEmailAddress rdf:type owl:DatatypeProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain :Seller ;
+                 rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasEngineName
+:hasEngineName rdf:type owl:DatatypeProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain :Engine ;
+               rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasExpiryDate
+:hasExpiryDate rdf:type owl:DatatypeProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain :Listing ;
+               rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasHorsePower
+:hasHorsePower rdf:type owl:DatatypeProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain :Engine ;
+               rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasManufacturerCountryOfOrigin
+:hasManufacturerCountryOfOrigin rdf:type owl:DatatypeProperty ,
+                                         owl:FunctionalProperty ;
+                                rdfs:domain :Manufacturer ;
+                                rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasManufacturerName
+:hasManufacturerName rdf:type owl:DatatypeProperty ,
+                              owl:FunctionalProperty ;
+                     rdfs:domain :Manufacturer ;
+                     rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasMileage
+:hasMileage rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Car ;
+            rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasModelName
+:hasModelName rdf:type owl:DatatypeProperty ,
+                       owl:FunctionalProperty ;
+              rdfs:domain :Model ;
+              rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasModelVersionName
+:hasModelVersionName rdf:type owl:DatatypeProperty ,
+                              owl:FunctionalProperty ;
+                     rdfs:domain :ModelVersion ;
+                     rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasNumberOfGears
+:hasNumberOfGears rdf:type owl:DatatypeProperty ,
+                           owl:FunctionalProperty ;
+                  rdfs:domain :Transmission ;
+                  rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasPhoneNumber
+:hasPhoneNumber rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Seller ;
+                rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasPostedDate
+:hasPostedDate rdf:type owl:DatatypeProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain :Listing ;
+               rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasPrice
+:hasPrice rdf:type owl:DatatypeProperty ,
+                   owl:FunctionalProperty ;
+          rdfs:domain :Listing ;
+          rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasSellerName
+:hasSellerName rdf:type owl:DatatypeProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain :Seller ;
+               rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasTaxId
+:hasTaxId rdf:type owl:DatatypeProperty ,
+                   owl:FunctionalProperty ;
+          rdfs:domain :Dealership ;
+          rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasTitle
+:hasTitle rdf:type owl:DatatypeProperty ,
+                   owl:FunctionalProperty ;
+          rdfs:domain :Listing ;
+          rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasTransmissionName
+:hasTransmissionName rdf:type owl:DatatypeProperty ,
+                              owl:FunctionalProperty ;
+                     rdfs:domain :Transmission ;
+                     rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasType
+:hasType rdf:type owl:DatatypeProperty ,
+                  owl:FunctionalProperty ;
+         rdfs:domain :ModelVersion ;
+         rdfs:range [ rdf:type rdfs:Datatype ;
+                      owl:oneOf [ rdf:type rdf:List ;
+                                  rdf:first "Coupe" ;
+                                  rdf:rest [ rdf:type rdf:List ;
+                                             rdf:first "Hatchback" ;
+                                             rdf:rest [ rdf:type rdf:List ;
+                                                        rdf:first "Kombi" ;
+                                                        rdf:rest [ rdf:type rdf:List ;
+                                                                   rdf:first "Pick-up" ;
+                                                                   rdf:rest [ rdf:type rdf:List ;
+                                                                              rdf:first "SUV" ;
+                                                                              rdf:rest [ rdf:type rdf:List ;
+                                                                                         rdf:first "Sedan" ;
+                                                                                         rdf:rest rdf:nil
+                                                                                       ]
+                                                                            ]
+                                                                 ]
+                                                      ]
+                                           ]
+                                ]
+                    ] .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasVIN
+:hasVIN rdf:type owl:DatatypeProperty ,
+                 owl:FunctionalProperty ;
+        rdfs:domain :Car ;
+        rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasVolume
+:hasVolume rdf:type owl:DatatypeProperty ,
+                    owl:FunctionalProperty ;
+           rdfs:domain [ rdf:type owl:Class ;
+                         owl:unionOf ( :Diesel
+                                       :Hybrid
+                                       :Petrol
+                                     )
+                       ] ;
+           rdfs:range xsd:decimal .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasYear
+:hasYear rdf:type owl:DatatypeProperty ,
+                  owl:FunctionalProperty ;
+         rdfs:domain :Car ;
+         rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/hasZIPCode
+:hasZIPCode rdf:type owl:DatatypeProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :Location ;
+            rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/producedFrom
+:producedFrom rdf:type owl:DatatypeProperty ,
+                       owl:FunctionalProperty ;
+              rdfs:domain :ModelVersion ;
+              rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/producedUntill
+:producedUntill rdf:type owl:DatatypeProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain :ModelVersion ;
+                rdfs:range xsd:dateTime .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Automatic
+:Automatic rdf:type owl:Class ;
+           rdfs:subClassOf :Transmission ;
+           owl:disjointWith :Manual .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Car
+:Car rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Dealership
+:Dealership rdf:type owl:Class ;
+            rdfs:subClassOf :Seller ;
+            owl:disjointWith :PrivateIndividual .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Diesel
+:Diesel rdf:type owl:Class ;
+        rdfs:subClassOf :Engine .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Electric
+:Electric rdf:type owl:Class ;
+          rdfs:subClassOf :Engine .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Engine
+:Engine rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Hybrid
+:Hybrid rdf:type owl:Class ;
+        rdfs:subClassOf :Engine .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Listing
+:Listing rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Location
+:Location rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Manual
+:Manual rdf:type owl:Class ;
+        rdfs:subClassOf :Transmission .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Manufacturer
+:Manufacturer rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Model
+:Model rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/ModelVersion
+:ModelVersion rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Petrol
+:Petrol rdf:type owl:Class ;
+        rdfs:subClassOf :Engine .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/PrivateIndividual
+:PrivateIndividual rdf:type owl:Class ;
+                   rdfs:subClassOf :Seller .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Seller
+:Seller rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Transmission
+:Transmission rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology#car0002
+:car0002 rdf:type owl:NamedIndividual ,
+                  :Car ;
+         :hasEngine :engine0002 ;
+         :hasModelVersion :model0002_version1 ;
+         :hasTransmission :transmission0002 ;
+         :hasCarOriginCountry "Polska" ;
+         :hasMileage 451000 ;
+         :hasVIN "VF3LC9HP0HS123456" ;
+         :hasYear 1998 .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology#engine0002
+:engine0002 rdf:type owl:NamedIndividual ,
+                     :Diesel ;
+            :hasEngineName "PSA DW10 HDi" ;
+            :hasHorsePower 90 ;
+            :hasVolume 2.0 .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology#listing0002
+:listing0002 rdf:type owl:NamedIndividual ,
+                      :Listing ;
+             :isListingOf :car0002 ;
+             :listedBy :seller0002 ;
+             :locatedAt :location0002 ;
+             :hasDescription "Przepiękny pojazd, takich już nie robią. Pali, skręca i hamuje." ;
+             :hasExpiryDate "2024-02-02T00:00:00"^^xsd:dateTime ;
+             :hasPostedDate "2024-01-02T00:00:00"^^xsd:dateTime ;
+             :hasPrice 2000 ;
+             :hasTitle "Znakomity peugeocik szuka nowego właściciela" .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology#location0002
+:location0002 rdf:type owl:NamedIndividual ,
+                       :Location ;
+              :hasAddress "Jasna 23" ;
+              :hasCity "Chorzów" ;
+              :hasCountry "Polska" ;
+              :hasZIPCode "41-506" .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology#manufacturer0002
+:manufacturer0002 rdf:type owl:NamedIndividual ,
+                           :Manufacturer ;
+                  :hasManufacturerCountryOfOrigin "Francja" ;
+                  :hasManufacturerName "Peugeot" .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology#model0002
+:model0002 rdf:type owl:NamedIndividual ,
+                    :Model ;
+           :isManufacturedBy :manufacturer0002 ;
+           :hasModelName "306" .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology#model0002_version1
+:model0002_version1 rdf:type owl:NamedIndividual ,
+                             :ModelVersion ;
+                    :isVersionOfModel :model0002 ;
+                    :hasModelVersionName "PH1" ;
+                    :hasType "Hatchback" .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology#seller0002
+:seller0002 rdf:type owl:NamedIndividual ,
+                     :PrivateIndividual ;
+            :hasSellerName "Jan Nowak" .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology#transmission0002
+:transmission0002 rdf:type owl:NamedIndividual ,
+                           :Manual ;
+                  :hasNumberOfGears 5 ;
+                  :hasTransmissionName "20TB51" .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/car0001
+:car0001 rdf:type owl:NamedIndividual ,
+                  :Car ;
+         :hasEngine :engine0001 ;
+         :hasModelVersion :model0001_version1 ;
+         :hasTransmission :transmission0001 ;
+         :hasCarOriginCountry "Polska" ;
+         :hasMileage 121300 ;
+         :hasVIN "WBA5T3200L7A12345" ;
+         :hasYear 2022 .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/engine0001
+:engine0001 rdf:type owl:NamedIndividual ,
+                     :Petrol ;
+            :hasEngineName "B48 R4 Turbo" ;
+            :hasHorsePower 181 ;
+            :hasVolume 2.0 .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/listing0001
+:listing0001 rdf:type owl:NamedIndividual ,
+                      :Listing ;
+             :isListingOf :car0001 ;
+             :listedBy :seller0001 ;
+             :locatedAt :location0001 ;
+             :hasDescription "Na sprzedaż przepiękne BMW, nie bite, starszy człowiek jeździł tylko na zakupy i do kościoła." ;
+             :hasExpiryDate "2024-01-30T00:00:00"^^xsd:dateTime ;
+             :hasPostedDate "2024-01-30T00:00:00"^^xsd:dateTime ;
+             :hasPrice 120000 ;
+             :hasTitle "Piękne BMW G21" .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/location0001
+:location0001 rdf:type owl:NamedIndividual ,
+                       :Location ;
+              :hasAddress "Feliksa Bocheńskiego 66" ;
+              :hasCity "Katowice" ;
+              :hasCountry "Polska" ;
+              :hasZIPCode "40-847" .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/manufacturer0001
+:manufacturer0001 rdf:type owl:NamedIndividual ,
+                           :Manufacturer ;
+                  :hasManufacturerCountryOfOrigin "Niemcy" ;
+                  :hasManufacturerName "BMW" .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/model0001
+:model0001 rdf:type owl:NamedIndividual ,
+                    :Model ;
+           :hasVersion :model0001_version1 ;
+           :isManufacturedBy :manufacturer0001 ;
+           :hasModelName "Seria 3" .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/model0001_version1
+:model0001_version1 rdf:type owl:NamedIndividual ,
+                             :ModelVersion ;
+                    :isVersionOfModel :model0001 ;
+                    :hasModelVersionName "G21" ;
+                    :hasType "Sedan" .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/seller0001
+:seller0001 rdf:type owl:NamedIndividual ,
+                     :Dealership ;
+            :hasSellerName "BMW Gazda Group" ;
+            :hasTaxId "6380012661" .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/transmission0001
+:transmission0001 rdf:type owl:NamedIndividual ,
+                           :Automatic ;
+                  :hasNumberOfGears 8 ;
+                  :hasTransmissionName "Steptronic" .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Diesel
+                :Electric
+                :Hybrid
+                :Petrol
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

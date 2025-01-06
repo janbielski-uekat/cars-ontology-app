@@ -1,0 +1,151 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cars Ontology App</title>
+    <link href="{% static 'output.css' %}" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-4">Car Listings</h1>
+        <div class="flex">
+            <aside class="w-1/4">
+                <div class="sticky top-0 p-4 bg-white rounded-lg shadow-md">
+                    <h2 class="text-xl font-semibold mb-2">Filters</h2>
+                    <form method="GET" action="{% url 'home' %}">
+                        <div class="mb-4">
+                            <label for="model_version_type" class="block text-sm font-medium text-gray-700">Type</label>
+                            <select id="model_version_type" name="model_version_type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <option value="All" {% if request.GET.model_version_type == "All" %}selected{% endif %}>All</option>
+                                {% for model_version_type in model_version_types %}
+                                    <option value="{{ model_version_type }}" {% if request.GET.model_version_type == model_version_type %}selected{% endif %}>{{ model_version_type }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="brand" class="block text-sm font-medium text-gray-700">Brand</label>
+                            <select id="brand" name="brand" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <option value="All" {% if request.GET.brand == "All" %}selected{% endif %}>All</option>
+                                {% for manufacturer in manufacturers %}
+                                    <option value="{{ manufacturer }}" {% if request.GET.brand == manufacturer %}selected{% endif %}>{{ manufacturer }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="model" class="block text-sm font-medium text-gray-700">Model</label>
+                            <select id="model" name="model" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <option value="All" {% if request.GET.model == "All" %}selected{% endif %}>All</option>
+                                {% for model in models %}
+                                    <option value="{{ model }}" {% if request.GET.model == model %}selected{% endif %}>{{ model }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="engine" class="block text-sm font-medium text-gray-700">Engine</label>
+                            <select id="engine" name="engine" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <option value="All" {% if request.GET.engine == "All" %}selected{% endif %}>All</option>
+                                {% for engine_type in engine_types %}
+                                    <option value="{{ engine_type }}" {% if request.GET.engine == engine_type %}selected{% endif %}>{{ engine_type }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="transmission" class="block text-sm font-medium text-gray-700">Transmission</label>
+                            <select id="transmission" name="transmission" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <option value="All" {% if request.GET.transmission == "All" %}selected{% endif %}>All</option>
+                                {% for transmission_type in transmission_types %}
+                                    <option value="{{ transmission_type }}" {% if request.GET.transmission == transmission_type %}selected{% endif %}>{{ transmission_type }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="min_price" class="block text-sm font-medium text-gray-700">Min Price</label>
+                            <input type="range" id="min_price" name="min_price" min="{{ min_price_range }}" max="{{ max_price_range }}" value="{{ request.GET.min_price|default:min_price_range }}" class="w-full" oninput="updatePriceDisplay()">
+                            <span id="min_price_display" class="block text-sm text-gray-600 mt-2">{{ request.GET.min_price|default:min_price_range }} PLN</span>
+                        </div>
+                        <div class="mb-4">
+                            <label for="max_price" class="block text-sm font-medium text-gray-700">Max Price</label>
+                            <input type="range" id="max_price" name="max_price" min="{{ min_price_range }}" max="{{ max_price_range }}" value="{{ request.GET.max_price|default:max_price_range }}" class="w-full" oninput="updatePriceDisplay()">
+                            <span id="max_price_display" class="block text-sm text-gray-600 mt-2">{{ request.GET.max_price|default:max_price_range }} PLN</span>
+                        </div>
+                        
+                        <script>
+                            function updatePriceDisplay() {
+                                const minPrice = document.getElementById('min_price').value;
+                                const maxPrice = document.getElementById('max_price').value;
+                                document.getElementById('min_price_display').textContent = minPrice + ' PLN';
+                                document.getElementById('max_price_display').textContent = maxPrice + ' PLN';
+                            }
+                        
+                            // Initialize the display values on page load
+                            document.addEventListener('DOMContentLoaded', function() {
+                                updatePriceDisplay();
+                            });
+                        </script>
+                        <div class="mb-4">
+                            <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Apply Filters</button>
+                        </div>
+                    </form>
+                </div>
+            </aside>
+            <main class="w-3/4 p-4 pt-0">
+                {% if listings %}
+                    <ul class="space-y-4">
+                        {% for listing in listings %}
+                        <li class="p-4 bg-white rounded-lg shadow-md">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-2xl font-bold">{{ listing.title }}</h3>
+                                <div class="text-right">
+                                    <p class="text-sm text-gray-600">Posted: {{ listing.postedDate }}</p>
+                                    <p class="text-sm text-gray-600">Expires: {{ listing.expiryDate }}</p>
+                                </div>
+                            </div>
+                            <p class="text-gray-700">{{ listing.manufacturerName }} | {{ listing.modelName }} | {{ listing.modelVersionName }}</p>
+                            <p class="text-gray-700">Location: {{ listing.address }}, {{ listing.city }} {{ listing.zipCode }}, {{ listing.country }}</p>
+                            <p class="mt-2 text-gray-600">{{ listing.description }}</p>
+                            <div class="flex mt-4">
+                                <div class="w-1/2">
+                                    <h4 class="text-lg font-semibold">Seller Information</h4>
+                                    <p class="text-gray-700">Type: {{ listing.sellerType }}</p>
+                                    <p class="text-gray-700">Name: {{ listing.sellerName }}</p>
+                                    {% if listing.taxId %}
+                                    <p class="text-gray-700">Tax ID: {{ listing.taxId }}</p>
+                                    {% endif %}
+                                    <h4 class="text-lg font-semibold mt-4">Car Information</h4>
+                                    <p class="text-gray-700">Type: {{ listing.modelVersionType }}</p>
+                                    <p class="text-gray-700">Year: {{ listing.year }}</p>
+                                    <p class="text-gray-700">VIN: {{ listing.vin }}</p>
+                                    <p class="text-gray-700">Mileage: {{ listing.mileage }} km</p>
+                                    <p class="text-gray-700">Country of Origin: {{ listing.countryOfOrigin }}</p>                                    
+                                </div>
+                                <div class="w-1/2">
+                                    <h4 class="text-lg font-semibold">Engine Information</h4>
+                                    <p class="text-gray-700">Type: {{ listing.engineType }}</p>
+                                    <p class="text-gray-700">Name: {{ listing.engineName }}</p>
+                                    <p class="text-gray-700">Volume: {{ listing.volume }} L</p>
+                                    <p class="text-gray-700">Horse Power: {{ listing.horsePower }} HP</p>
+                                    <h4 class="text-lg font-semibold mt-4">Transmission Information</h4>
+                                    <p class="text-gray-700">Type: {{ listing.transmissionType }}</p>
+                                    <p class="text-gray-700">Name: {{ listing.transmissionName }}</p>
+                                    <p class="text-gray-700">Number of Gears: {{ listing.numberOfGears }}</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-end items-center mt-4">
+                                <p class="text-lg font-semibold text-indigo-600">PRICE: {{ listing.price }} PLN</p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="text-center text-2xl font-bold text-gray-700">
+                        No results found
+                    </div>
+                {% endif %}
+            </main>
+        </div>
+    </div>
+</body>
+</html>

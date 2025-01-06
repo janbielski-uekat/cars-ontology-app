@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  django:
+    build:
+      context: ./cars_ontology_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - fuseki
+    volumes:
+      - ./cars_ontology_app:/app
+    environment:
+      - FUSEKI_SPARQL_ENDPOINT=http://fuseki:3030/cars-ontology/sparql
+
+  fuseki:
+    build:
+      context: ./fuseki_server
+    ports:
+      - "3030:3030"
+    volumes:
+      - ./fuseki_server/run/databases:/fuseki/run/databases
+      - ./fuseki_server/run/configuration:/fuseki/run/configuration
