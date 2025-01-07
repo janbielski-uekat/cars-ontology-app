@@ -15,24 +15,36 @@ def execute_sparql_query(query):
     sparql.setReturnFormat(JSON)
     return sparql.query().convert()
 
-def fetch_filtered_listings(brand=None, model=None, engine=None, transmission=None, model_version_type=None, min_price=None, max_price=None):
+
+def fetch_filtered_listings(
+    brand=None,
+    model=None,
+    engine=None,
+    transmission=None,
+    model_version_type=None,
+    min_price=None,
+    max_price=None,
+):
     filters = []
 
     if brand and brand != "All":
-        filters.append(f"?model :isManufacturedBy ?manufacturer . ?manufacturer :hasManufacturerName \"{brand}\" .")
+        filters.append(
+            f'?model :isManufacturedBy ?manufacturer . ?manufacturer :hasManufacturerName "{brand}" .'
+        )
     if model and model != "All":
-        filters.append(f"?model :hasModelName \"{model}\" .")
+        filters.append(f'?model :hasModelName "{model}" .')
     if engine and engine != "All":
-        filters.append(f"?car :hasEngine ?engine . ?engine :hasEngineName \"{engine}\" .")
+        filters.append(f"?car :hasEngine ?engine . ?engine rdf:type :{engine} .")
     if transmission and transmission != "All":
-        filters.append(f"?car :hasTransmission ?transmission . ?transmission rdf:type :{transmission} .")
+        filters.append(
+            f"?car :hasTransmission ?transmission . ?transmission rdf:type :{transmission} ."
+        )
     if model_version_type and model_version_type != "All":
-        filters.append(f"?modelVersion :hasType \"{model_version_type}\" .")
+        filters.append(f'?modelVersion :hasType "{model_version_type}" .')
     if min_price:
         filters.append(f"?listing :hasPrice ?price . FILTER(?price >= {min_price}) .")
     if max_price:
         filters.append(f"?listing :hasPrice ?price . FILTER(?price <= {max_price}) .")
-
 
     filter_string = "\n".join(filters)
 
@@ -123,6 +135,7 @@ def fetch_filtered_listings(brand=None, model=None, engine=None, transmission=No
         listings.append(listing)
     return listings
 
+
 def fetch_all_listings():
     query = """
         SELECT ?title ?modelVersionName ?modelName WHERE {
@@ -147,6 +160,7 @@ def fetch_all_listings():
         )
     return listings
 
+
 def fetch_all_manufacturers():
     query = """
         SELECT ?manufacturerName WHERE {
@@ -160,6 +174,7 @@ def fetch_all_manufacturers():
         manufacturers.append(result["manufacturerName"]["value"])
     return manufacturers
 
+
 def fetch_all_models():
     query = """
         SELECT ?modelName WHERE {
@@ -172,6 +187,7 @@ def fetch_all_models():
     for result in results["results"]["bindings"]:
         models.append(result["modelName"]["value"])
     return models
+
 
 def fetch_all_transmission_types():
     query = """
@@ -187,6 +203,7 @@ def fetch_all_transmission_types():
         transmissions.append(result["transmissionName"]["value"])
     return transmissions
 
+
 def fetch_all_engine_types():
     query = """
         SELECT DISTINCT (STRAFTER(STR(?engineType), "cars-ontology/") AS ?engineName) WHERE {
@@ -201,6 +218,7 @@ def fetch_all_engine_types():
         engines.append(result["engineName"]["value"])
     return engines
 
+
 def fetch_all_model_version_types():
     query = """
         SELECT DISTINCT ?modelVersionType WHERE {
@@ -212,6 +230,7 @@ def fetch_all_model_version_types():
     for result in results["results"]["bindings"]:
         model_version_types.append(result["modelVersionType"]["value"])
     return model_version_types
+
 
 def get_price_range():
     query = """
