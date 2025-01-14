@@ -366,6 +366,35 @@
 #    Classes
 #################################################################
 
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology#NewCar
+:NewCar rdf:type owl:Class ;
+        owl:equivalentClass [ owl:intersectionOf ( :Car
+                                                   [ rdf:type owl:Restriction ;
+                                                     owl:onProperty :hasMileage ;
+                                                     owl:hasValue 0
+                                                   ]
+                                                 ) ;
+                              rdf:type owl:Class
+                            ] .
+
+
+###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology#UsedCar
+:UsedCar rdf:type owl:Class ;
+         owl:equivalentClass [ owl:intersectionOf ( :Car
+                                                    [ rdf:type owl:Restriction ;
+                                                      owl:onProperty :hasMileage ;
+                                                      owl:someValuesFrom [ rdf:type rdfs:Datatype ;
+                                                                           owl:onDatatype xsd:integer ;
+                                                                           owl:withRestrictions ( [ xsd:minExclusive 0
+                                                                                                  ]
+                                                                                                )
+                                                                         ]
+                                                    ]
+                                                  ) ;
+                               rdf:type owl:Class
+                             ] .
+
+
 ###  http://www.semanticweb.org/janbi/ontologies/2025/0/cars-ontology/Automatic
 :Automatic rdf:type owl:Class ;
            rdfs:subClassOf :Transmission ;
