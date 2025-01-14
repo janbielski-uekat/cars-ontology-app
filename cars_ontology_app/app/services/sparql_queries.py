@@ -53,7 +53,7 @@ def fetch_filtered_listings(
                (STRAFTER(STR(?transmissionType), "cars-ontology/") AS ?transmissionTypeName) ?transmissionName ?numberOfGears 
                (STRAFTER(STR(?engineType), "cars-ontology/") AS ?engineTypeName) ?engineName ?volume ?horsePower ?countryOfOrigin
                ?vin ?year ?address ?city ?country ?zipCode 
-               (STRAFTER(STR(?sellerType), "cars-ontology/") AS ?sellerTypeName) ?sellerName ?taxId ?modelVersionType WHERE {{
+               (STRAFTER(STR(?sellerType), "cars-ontology/") AS ?sellerTypeName) ?sellerName ?taxId ?modelVersionType ?carState WHERE {{
             ?listing a :Listing ;
                 :hasTitle ?title ;
                 :isListingOf ?car ;
@@ -96,6 +96,7 @@ def fetch_filtered_listings(
                 ?seller a :Dealership ;
                         :hasTaxId ?taxId .
             }}
+            BIND(IF(EXISTS {{ ?car a :NewCar }}, "New", "Used") AS ?carState)
             {filter_string}
         }}
     """
@@ -129,6 +130,7 @@ def fetch_filtered_listings(
             "sellerType": result["sellerTypeName"]["value"],
             "sellerName": result["sellerName"]["value"],
             "modelVersionType": result["modelVersionType"]["value"],
+            "carState": result["carState"]["value"],
         }
         if "taxId" in result:
             listing["taxId"] = result["taxId"]["value"]
