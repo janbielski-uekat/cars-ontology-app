@@ -24,6 +24,7 @@ def fetch_filtered_listings(
     model_version_type=None,
     min_price=None,
     max_price=None,
+    car_state=None,
 ):
     filters = []
 
@@ -45,6 +46,8 @@ def fetch_filtered_listings(
         filters.append(f"?listing :hasPrice ?price . FILTER(?price >= {min_price}) .")
     if max_price:
         filters.append(f"?listing :hasPrice ?price . FILTER(?price <= {max_price}) .")
+    if car_state and car_state != "All":
+        filters.append(f'FILTER(?carState = "{car_state}") .')
 
     filter_string = "\n".join(filters)
 

@@ -17,6 +17,14 @@
                     <h2 class="text-xl font-semibold mb-2">Filters</h2>
                     <form method="GET" action="{% url 'home' %}">
                         <div class="mb-4">
+                            <label for="car_state" class="block text-sm font-medium text-gray-700">State</label>
+                            <select id="car_state" name="car_state" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                <option value="All" {% if request.GET.car_state == "All" %}selected{% endif %}>All</option>
+                                <option value="New" {% if request.GET.car_state == "New" %}selected{% endif %}>New</option>
+                                <option value="Used" {% if request.GET.car_state == "Used" %}selected{% endif %}>Used</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
                             <label for="model_version_type" class="block text-sm font-medium text-gray-700">Type</label>
                             <select id="model_version_type" name="model_version_type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                 <option value="All" {% if request.GET.model_version_type == "All" %}selected{% endif %}>All</option>

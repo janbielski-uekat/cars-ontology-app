@@ -16,8 +16,9 @@ def home(request):
     engine = request.GET.get("engine")
     transmission = request.GET.get("transmission")
     model_version_type = request.GET.get("model_version_type")
-    min_price = request.GET.get('min_price')
-    max_price = request.GET.get('max_price')
+    min_price = request.GET.get("min_price")
+    max_price = request.GET.get("max_price")
+    car_state = request.GET.get("car_state")
 
     # Convert min_price and max_price to integers if they are not None
     if min_price:
@@ -25,7 +26,16 @@ def home(request):
     if max_price:
         max_price = int(max_price)
 
-    listings = fetch_filtered_listings(brand, model, engine, transmission, model_version_type, min_price, max_price)
+    listings = fetch_filtered_listings(
+        brand,
+        model,
+        engine,
+        transmission,
+        model_version_type,
+        min_price,
+        max_price,
+        car_state,
+    )
     manufacturers = fetch_all_manufacturers()
     models = fetch_all_models()
     engine_types = fetch_all_engine_types()
@@ -40,7 +50,8 @@ def home(request):
         "engine_types": engine_types,
         "transmission_types": transmission_types,
         "model_version_types": model_version_types,
-        'min_price_range': min_price_range,
-        'max_price_range': max_price_range,
+        "min_price_range": min_price_range,
+        "max_price_range": max_price_range,
+        "car_state": car_state,
     }
     return render(request, "app/home.html", context)
